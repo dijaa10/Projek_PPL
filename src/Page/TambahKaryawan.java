@@ -9,8 +9,11 @@ import com.mysql.jdbc.Connection;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Page.HalamanKaryawan;
 
 /**
  *
@@ -25,7 +28,82 @@ public class TambahKaryawan extends javax.swing.JPanel {
         initComponents();
     
          // TODO add your handling code here:
+         id_auto();
+         aturTextField();
         
+    }
+    private void clear(){
+        kd.setText(null);
+        id_auto();
+    }
+    
+    private void id_auto(){
+       try {
+           
+           java.sql.Connection conn=(Connection) Database.config.getConnection();//memanggil koneksi
+            Statement sttmnt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);//membuat statement
+             String sql="select max(right(id_karyawan, 3)) as no from karyawan";
+             ResultSet rs = sttmnt.executeQuery(sql);//menjalanakn query
+             while(rs.next()){
+                 if (rs.first() == false ){
+                     kd.setText("KR001");
+                 }else{
+                 rs.last();
+                 int set_id = rs.getInt(1)+1;
+                 String no = String.valueOf(set_id);
+                 int id_next = no.length();
+                 for (int a = 0; a<3 - id_next; a++){
+                     no = "0" + no;
+                 }
+                 kd.setText("KR" + no);
+                 }
+             }
+             
+       }catch (Exception ex){
+           
+       }
+            }
+    void aturTextField(){
+
+kd.setEnabled(false);
+
+}
+
+    
+    public void tambah(){
+        
+        String kode = kd.getText();
+        String nama = nm.getText();
+        String username = us.getText();
+        String password = pas.getText();
+        String level = (String)lev.getSelectedItem();
+        if (kode.isEmpty() ) {
+            JOptionPane.showMessageDialog(null,"Kode Karyawan tidak boleh kosong");
+            kd.requestFocus();
+        }else if (nama.isEmpty()) {
+            JOptionPane.showMessageDialog(null,"Nama Karyawan tidak boleh kosong");
+            nm.requestFocus();
+        }else if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(null,"Username tidak boleh kosong");
+           us.requestFocus();
+        }else if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(null,"Password tidak boleh kosong");
+            pas.requestFocus();
+        
+        }else{
+        try{
+            String sql = "INSERT INTO karyawan VALUES ('" + kode +
+                    "','" + nama + "','" + username + "','" + password + "','" + level + "' )";
+            java.sql.Connection conn=(Connection) Database.config.getConnection();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"data berhasil disimpan");
+            this.setVisible(false);
+            new Page.HalamanSupplier().setVisible(true);
+        } catch (Exception t){
+            JOptionPane.showMessageDialog(null, "data gagal disimpan");
+        }
+        }
     }
 
     /**
@@ -46,11 +124,11 @@ public class TambahKaryawan extends javax.swing.JPanel {
         nm = new javax.swing.JTextField();
         us = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        pas = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         lev = new javax.swing.JComboBox<>();
+        pas = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -100,12 +178,6 @@ public class TambahKaryawan extends javax.swing.JPanel {
             .addGap(0, 36, Short.MAX_VALUE)
         );
 
-        pas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                pasKeyPressed(evt);
-            }
-        });
-
         jButton1.setBackground(new java.awt.Color(0, 102, 0));
         jButton1.setText("Kirim");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -153,12 +225,12 @@ public class TambahKaryawan extends javax.swing.JPanel {
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(kd, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                                .addComponent(nm)
-                                .addComponent(us)
-                                .addComponent(pas))
-                            .addComponent(lev, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lev, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(pas, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(kd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                                .addComponent(nm, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(us, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jButton1)
@@ -246,59 +318,21 @@ public class TambahKaryawan extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_usKeyPressed
 
-    private void pasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pasKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-            lev.requestFocus();
-        }
-    }//GEN-LAST:event_pasKeyPressed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         String kode = kd.getText();
-        String nama = nm.getText();
-        String username = us.getText();
-        String password = pas.getText();
-        String level = (String)lev.getSelectedItem();
-        try{
-            String sql = "INSERT INTO karyawan VALUES ('" + kode +
-                    "','" + nama + "','" + username + "','" + password + "','" + level + "' )";
-            java.sql.Connection conn=(Connection) Database.config.getConnection();
-            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
-            pst.execute();
-            JOptionPane.showMessageDialog(null,"data berhasil disimpan");
-            this.setVisible(false);
-            new Page.HalamanSupplier().setVisible(true);
-        } catch (Exception t){
-            JOptionPane.showMessageDialog(null, "data gagal disimpan");
-        }
+        tambah();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void levKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_levKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-         String kode = kd.getText();
-        String nama = nm.getText();
-        String username = us.getText();
-        String password = pas.getText();
-        String level = (String)lev.getSelectedItem();
-        try{
-            String sql = "INSERT INTO karyawan VALUES ('" + kode +
-                    "','" + nama + "','" + username + "','" + password + "','" + level + "' )";
-            java.sql.Connection conn=(Connection) Database.config.getConnection();
-            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
-            pst.execute();
-            JOptionPane.showMessageDialog(null,"data berhasil disimpan");
-            this.setVisible(false);
-            new Page.HalamanSupplier().setVisible(true);
-        } catch (Exception t){
-            JOptionPane.showMessageDialog(null, "data gagal disimpan");
-        }}
+            tambah();
+         }
     }//GEN-LAST:event_levKeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        showForm(new HalamanMenu()); 
+        reset();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -321,6 +355,10 @@ public class TambahKaryawan extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void showForm(HalamanMenu halamanMenu) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void reset() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

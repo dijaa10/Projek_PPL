@@ -78,13 +78,13 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="kd" pref="265" max="32767" attributes="0"/>
-                                  <Component id="nm" max="32767" attributes="0"/>
-                                  <Component id="us" max="32767" attributes="0"/>
-                                  <Component id="pas" alignment="0" max="32767" attributes="0"/>
-                              </Group>
                               <Component id="lev" min="-2" pref="273" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="pas" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="kd" alignment="0" pref="265" max="32767" attributes="0"/>
+                                  <Component id="nm" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="us" alignment="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
@@ -205,11 +205,6 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Component class="javax.swing.JPasswordField" name="pas">
-          <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pasKeyPressed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -259,6 +254,8 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="pas">
         </Component>
       </SubComponents>
     </Container>

@@ -23,9 +23,9 @@ public class TableActionReader extends DefaultTableCellRenderer{
         if(isSelected == false && row % 2 == 0) {
             action.setBackground(Color.WHITE);
         } else {
-            action.setBackground(com.getBackground());
+            action.setBackground(Color.WHITE);
         }
-        action.setBackground(com.getBackground());
+        action.setBackground(Color.WHITE);
         return action;
     }
     

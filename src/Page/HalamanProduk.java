@@ -6,7 +6,7 @@ package Page;
 
 import Database.config;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.Statement;  
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.KeyEvent;

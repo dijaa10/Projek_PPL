@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import cell.TableActionReader;
 import cell.TableCellEditor;
 import cell.tableActionEvent;
+import javaswingdev.message.MessageDialog;
 
 /**
  *
@@ -23,6 +24,7 @@ public class HalamanKaryawan extends javax.swing.JPanel {
     /**
      * Creates new form HalamanMenu
      */
+    
     public HalamanKaryawan() {
         initComponents();
         dataTable();
@@ -30,6 +32,7 @@ public class HalamanKaryawan extends javax.swing.JPanel {
          // TODO add your handling code here:
         
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,13 +73,14 @@ public class HalamanKaryawan extends javax.swing.JPanel {
         tabel.setForeground(new java.awt.Color(255, 255, 255));
         tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Kode Karyawan", "Nama Karyawan", "Username", "Level"
+                "Kode Karyawan", "Nama Karyawan", "Username", "Level", "Aksi"
             }
         ));
         tabel.setColorBackgoundHead(new java.awt.Color(255, 255, 255));
@@ -245,8 +249,8 @@ public class HalamanKaryawan extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+       
         
-        new TambahMenu().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void crKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_crKeyPressed
@@ -299,6 +303,7 @@ public void dataTable() {
         tbl.addColumn("Kode Karyawan");
         tbl.addColumn("Nama");
         tbl.addColumn("username");
+        
         tbl.addColumn("level");
         tbl.addColumn("Aksi");
 
@@ -336,8 +341,7 @@ public void dataTable() {
                 DefaultTableModel model = (DefaultTableModel) tabel.getModel();
                 
                 String idKar = (String) model.getValueAt(row, 0);
-
-                try {
+                             try {
                     Statement statement = (Statement) config.getConnection().createStatement();
                     statement.executeUpdate("DELETE from karyawan where id_karyawan = ('" + idKar + "');");
                     JOptionPane.showMessageDialog(null, "data berhasil di HAPUS");
@@ -345,6 +349,8 @@ public void dataTable() {
                 } catch (Exception t) {
                     JOptionPane.showMessageDialog(null, "Data gagal di Hapus");
                 }
+        
+               
                 dataTable();
                 pilihan();
             }
@@ -353,6 +359,10 @@ public void dataTable() {
         
         tabel.getColumnModel().getColumn(4).setCellRenderer(new TableActionReader());
         tabel.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(event));
+    }
+
+    private void showForm(HalamanMenu halamanMenu) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 

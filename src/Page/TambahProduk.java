@@ -27,6 +27,31 @@ public class TambahProduk extends javax.swing.JPanel {
          // TODO add your handling code here:
         
     }
+    public void tambah(){
+        String kode = kd.getText();
+        String nama = nm.getText();
+        if (kode.isEmpty() ) {
+            JOptionPane.showMessageDialog(null,"Kode Produk tidak boleh kosong");
+            kd.requestFocus();
+        }else if (nama.isEmpty()) {
+            JOptionPane.showMessageDialog(null,"Nama Produk tidak boleh kosong");
+            nm.requestFocus();
+        
+        }else{
+        try{
+            String sql = "INSERT INTO produk VALUES ('" + kode +
+                    "','" + nama + "')";
+            java.sql.Connection conn=(Connection) Database.config.getConnection();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"data berhasil disimpan");
+            this.setVisible(false);
+            new Page.HalamanProduk().setVisible(true);
+        } catch (Exception t){
+            JOptionPane.showMessageDialog(null, "data gagal disimpan");
+        }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,21 +194,7 @@ public class TambahProduk extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String kode = kd.getText();
-        String nama = nm.getText();
-        
-        try{
-            String sql = "INSERT INTO produk VALUES ('" + kode +
-                    "','" + nama + "')";
-            java.sql.Connection conn=(Connection) Database.config.getConnection();
-            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
-            pst.execute();
-            JOptionPane.showMessageDialog(null,"data berhasil disimpan");
-            this.setVisible(false);
-            new Page.HalamanProduk().setVisible(true);
-        } catch (Exception t){
-            JOptionPane.showMessageDialog(null, "data gagal disimpan");
-        }
+        tambah();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void kdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kdKeyPressed
@@ -196,21 +207,7 @@ public class TambahProduk extends javax.swing.JPanel {
     private void nmKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nmKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-            String kode = kd.getText();
-        String nama = nm.getText();
-        
-        try{
-            String sql = "INSERT INTO produk VALUES ('" + kode +
-                    "','" + nama + "')";
-            java.sql.Connection conn=(Connection) Database.config.getConnection();
-            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
-            pst.execute();
-            JOptionPane.showMessageDialog(null,"data berhasil disimpan");
-            this.setVisible(false);
-            new Page.HalamanProduk().setVisible(true);
-        } catch (Exception t){
-            JOptionPane.showMessageDialog(null, "data gagal disimpan");
-        }
+           tambah();
         }
     }//GEN-LAST:event_nmKeyPressed
 

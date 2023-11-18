@@ -113,11 +113,12 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
+              <Table columnCount="5" rowCount="5">
                 <Column editable="true" title="Kode Karyawan" type="java.lang.Object"/>
                 <Column editable="true" title="Nama Karyawan" type="java.lang.Object"/>
                 <Column editable="true" title="Username" type="java.lang.Object"/>
                 <Column editable="true" title="Level" type="java.lang.Object"/>
+                <Column editable="true" title="Aksi" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="colorBackgoundHead" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
