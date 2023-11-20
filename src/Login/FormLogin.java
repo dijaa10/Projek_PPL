@@ -30,7 +30,10 @@ public class FormLogin extends javax.swing.JFrame {
     public void login(){
         String username = userText.getText();
         String pass = passText.getText();
-        if (username.isEmpty() ) {
+        if (username.isEmpty() && pass.isEmpty() ) {
+            JOptionPane.showMessageDialog(null,"Login terlebih dahulu");
+            userText.requestFocus();
+        }else if (username.isEmpty() ) {
             JOptionPane.showMessageDialog(null,"Username Tidak Boleh Kosong");
             userText.requestFocus();
         }else if (pass.isEmpty()) {
